@@ -33,6 +33,13 @@ protected:
 
 	void MyUnCrouch();
 
+	UPROPERTY(BlueprintReadOnly, Category = "Jump")
+		bool bIsJumping;
+
+	void Jump();
+
+	void StopJump();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

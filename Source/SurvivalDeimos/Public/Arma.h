@@ -15,13 +15,18 @@ public:
 	// Sets default values for this actor's properties
 	AArma();
 
+	UFUNCTION()
+		void Atirar();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Mesh")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Mesh", meta = (AllowPrivateAccess = "true"))
 		class USkeletalMeshComponent* MeshArma;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Arrow", meta = (AllowPrivateAccess = "true"))
+		class UArrowComponent* Arrow;
 
 public:	
 	// Called every frame

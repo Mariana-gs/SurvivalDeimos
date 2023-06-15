@@ -3,6 +3,11 @@
 
 #include "Arma.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/ArrowComponent.h"
+#include "Engine/EngineTypes.h"
+#include "Public/CollisionQueryParams.h"
+#include "Engine/World.h"
+#include "Public/DrawDebugHelpers.h"
 
 
 // Sets default values
@@ -12,8 +17,37 @@ AArma::AArma()
 	PrimaryActorTick.bCanEverTick = true;
 
 	MeshArma = CreateDefaultSubobject<USkeletalMeshComponent>(FName("MeshArma"));
+	RootComponent = MeshArma;
 
+	Arrow = CreateDefaultSubobject<UArrowComponent>("Arrow");
+	//Arrow->SetupAttachment(RootComponent);
+	Arrow->AttachToComponent(MeshArma, FAttachmentTransformRules::SnapToTargetIncludingScale, FName("MuzzleFlashSocket"));
+	Arrow->SetRelativeLocation(FVector(1.5f, 0.f, -1.2f));
+	Arrow->SetRelativeScale3D(FVector(0.3f, 0.8f, 0.7f));
+}
 
+void AArma::Atirar(){
+	UArrowComponent* Arrow = FindComponentByClass<UArrowComponent>();
+	if (Arrow) {
+		FVector Inicio = Arrow->GetComponentLocation();
+		FVector Direcao = Arrow->GetComponentRotation().Vector();
+		FVector Fim = Inicio + (Direcao * 1000);
+
+		FHitResult Info;
+		FCollisionQueryParams Params;
+		Params.AddIgnoredActor(this);
+		Params.AddIgnoredActor(GetOwner());
+		Params.bTraceComplex = true;
+
+		bool Hit = GetWorld()->LineTraceSingleByChannel(Info, Inicio, Fim, ECollisionChannel::ECC_Visibility, Params);
+
+		if (Hit) {
+			UE_LOG(LogTemp, Warning, TEXT("Acertou em Algo"));
+		}
+
+		DrawDebugLine(GetWorld(), Inicio, Fim, FColor::Red, false, 5.f, (uint8)0, 1.0f);
+
+	}
 }
 
 // Called when the game starts or when spawned
@@ -27,6 +61,7 @@ void AArma::BeginPlay()
 void AArma::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
 
 }
 

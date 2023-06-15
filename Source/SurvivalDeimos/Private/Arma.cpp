@@ -8,6 +8,8 @@
 #include "Public/CollisionQueryParams.h"
 #include "Engine/World.h"
 #include "Public/DrawDebugHelpers.h"
+#include "UObject/ConstructorHelpers.h"
+#include "Engine/SkeletalMesh.h"
 
 
 // Sets default values
@@ -17,13 +19,23 @@ AArma::AArma()
 	PrimaryActorTick.bCanEverTick = true;
 
 	MeshArma = CreateDefaultSubobject<USkeletalMeshComponent>(FName("MeshArma"));
-	RootComponent = MeshArma;
+	
+	ConstructorHelpers::FObjectFinder<USkeletalMesh>Mesh(TEXT("SkeletalMesh'/Game/Weapons/Rifle.Rifle'"));
+	if (Mesh.Succeeded()) {
+		MeshArma->SetSkeletalMesh(Mesh.Object);
+	}
 
 	Arrow = CreateDefaultSubobject<UArrowComponent>("Arrow");
-	//Arrow->SetupAttachment(RootComponent);
-	Arrow->AttachToComponent(MeshArma, FAttachmentTransformRules::SnapToTargetIncludingScale, FName("MuzzleFlashSocket"));
-	Arrow->SetRelativeLocation(FVector(1.5f, 0.f, -1.2f));
-	Arrow->SetRelativeScale3D(FVector(0.3f, 0.8f, 0.7f));
+	Arrow->SetupAttachment(MeshArma, FName("MuzzleFlashSocket"));
+	
+	RootComponent = MeshArma;
+
+	//Não é Recomendado Utilizar no construtor
+	//Arrow->AttachToComponent(MeshArma, FAttachmentTransformRules::SnapToTargetIncludingScale, FName("MuzzleFlashSocket"));
+	//Arrow->SetRelativeLocation(FVector(1.5f, 0.f, -1.2f));
+	//Arrow->SetRelativeScale3D(FVector(0.3f, 0.8f, 0.7f));
+
+
 }
 
 void AArma::Atirar(){

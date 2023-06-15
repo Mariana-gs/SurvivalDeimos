@@ -8,6 +8,9 @@
 #include "GameFramework/PawnMovementComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Character.h"
+#include "Engine/World.h"
+#include "Arma.h"
+#include "Engine/EngineTypes.h"
 
 // Sets default values
 APersonagemTPS::APersonagemTPS(){
@@ -34,6 +37,13 @@ APersonagemTPS::APersonagemTPS(){
 // Called when the game starts or when spawned
 void APersonagemTPS::BeginPlay(){
 	Super::BeginPlay();
+
+	//Spawn Weapon
+	FActorSpawnParameters Params;
+	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	AArma* ArmaPlayer = GetWorld()->SpawnActor<AArma>(BP_Rifle, FTransform(), Params);
+	
+	ArmaPlayer->AttachToComponent(Cast<USceneComponent>(GetMesh()), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("WeaponSocket"));
 
 }
 

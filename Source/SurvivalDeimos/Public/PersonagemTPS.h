@@ -29,6 +29,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
 		class USpringArmComponent* SpringArmCamera;
 
+	UPROPERTY(EditAnywhere, Category = "Weapon")
+		TSubclassOf<class AArma> BP_Rifle;
+
 	void MyCrouch();
 
 	void MyUnCrouch();

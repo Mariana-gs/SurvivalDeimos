@@ -17,6 +17,7 @@
 #include "Materials/MaterialInterface.h"
 #include "Math/UnrealMathUtility.h"
 #include "Sound/SoundBase.h"
+#include "GameFramework/Character.h"
 
 // Sets default values
 AArma::AArma()
@@ -67,9 +68,12 @@ void AArma::Atirar(){
 		if (Hit) {
 			UE_LOG(LogTemp, Warning, TEXT("Acertou em Algo"));
 			AActor* Actor = Info.GetActor();
-			if (Actor->GetClass()->IsChildOf(ASkeletalMeshActor::StaticClass()) && BloodImpact) {
-				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), BloodImpact, Info.Location, Info.ImpactNormal.Rotation(), true);
+
+			if (Actor->GetClass()->IsChildOf(ACharacter::StaticClass()) && BloodImpact) {
+				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), BloodImpact, Info.Location, 
+					Info.ImpactNormal.Rotation(), true);
 			
+
 			}else if (Impact) {
 				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), Impact, Info.Location, Info.ImpactNormal.Rotation(), true);
 
@@ -83,7 +87,7 @@ void AArma::Atirar(){
 			UGameplayStatics::PlaySoundAtLocation(Arrow, Sound, Inicio);
 		}
 
-		//DrawDebugLine(GetWorld(), Inicio, Fim, FColor::Red, false, 5.f, (uint8)0, 1.0f);
+		DrawDebugLine(GetWorld(), Inicio, Fim, FColor::Red, false, 5.f, (uint8)0, 1.0f);
 
 		if (MuzzleEffect) {
 			FVector Location = Arrow->GetComponentLocation();

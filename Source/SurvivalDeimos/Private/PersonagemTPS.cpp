@@ -11,6 +11,7 @@
 #include "Engine/World.h"
 #include "Arma.h"
 #include "Engine/EngineTypes.h"
+#include "Public/WorldCollision.h"
 
 // Sets default values
 APersonagemTPS::APersonagemTPS(){
@@ -44,7 +45,7 @@ void APersonagemTPS::BeginPlay(){
 	//Spawn Weapon
 	FActorSpawnParameters Params;
 	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	AArma* ArmaPlayer = GetWorld()->SpawnActor<AArma>(BP_Rifle, FTransform(), Params);
+	ArmaPlayer = GetWorld()->SpawnActor<AArma>(BP_Rifle, FTransform(), Params);
 	
 	ArmaPlayer->AttachToComponent(Cast<USceneComponent>(GetMesh()), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("WeaponSocket"));
 
@@ -67,21 +68,20 @@ void APersonagemTPS::MyUnCrouch(){
 }
 
 void APersonagemTPS::Jump(){
-
 	bIsJumping = true;
-
 }
 
 void APersonagemTPS::StopJump(){
-
 	bIsJumping = false;
+}
 
+void APersonagemTPS::Atirar(){
+	ArmaPlayer->Atirar();
 }
 
 // Called every frame
 void APersonagemTPS::Tick(float DeltaTime){
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
@@ -97,6 +97,7 @@ void APersonagemTPS::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAction("Crouch", EInputEvent::IE_Released, this ,&APersonagemTPS::MyUnCrouch);
 	PlayerInputComponent->BindAction("Jump", EInputEvent::IE_Pressed, this, &APersonagemTPS::Jump);
 	PlayerInputComponent->BindAction("Jump", EInputEvent::IE_Released, this, &APersonagemTPS::StopJump);
+	PlayerInputComponent->BindAction("Atirar", EInputEvent::IE_Pressed, this, &APersonagemTPS::Atirar);
 
 }
 

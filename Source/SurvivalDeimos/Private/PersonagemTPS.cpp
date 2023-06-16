@@ -101,3 +101,16 @@ void APersonagemTPS::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 }
 
+void APersonagemTPS::SetHealth(float Dano){
+	if (Health > 0.f) {
+		Health -= Dano;
+	}else{
+		bIsDead = true;
+	}
+}
+
+float APersonagemTPS::GetHealth()
+{
+	return Health;
+}
+

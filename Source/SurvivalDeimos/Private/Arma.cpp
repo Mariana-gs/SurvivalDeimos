@@ -18,6 +18,9 @@
 #include "Math/UnrealMathUtility.h"
 #include "Sound/SoundBase.h"
 #include "GameFramework/Character.h"
+#include "PersonagemTPS.h"
+#include "BotCharacter.h"
+
 
 // Sets default values
 AArma::AArma()
@@ -72,7 +75,19 @@ void AArma::Atirar(){
 			if (Actor->GetClass()->IsChildOf(ACharacter::StaticClass()) && BloodImpact) {
 				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), BloodImpact, Info.Location, 
 					Info.ImpactNormal.Rotation(), true);
-			
+
+
+				APersonagemTPS* Player = Cast<APersonagemTPS>(Actor);
+				
+				if (Player) {
+					Player->SetHealth(0.25f);
+				}
+				else {
+					ABotCharacter* Inimigo = Cast<ABotCharacter>(Actor);
+					if (Inimigo) {
+						Inimigo->SetHealth(5.f);
+					}
+				}
 
 			}else if (Impact) {
 				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), Impact, Info.Location, Info.ImpactNormal.Rotation(), true);
@@ -87,7 +102,7 @@ void AArma::Atirar(){
 			UGameplayStatics::PlaySoundAtLocation(Arrow, Sound, Inicio);
 		}
 
-		DrawDebugLine(GetWorld(), Inicio, Fim, FColor::Red, false, 5.f, (uint8)0, 1.0f);
+		//DrawDebugLine(GetWorld(), Inicio, Fim, FColor::Red, false, 5.f, (uint8)0, 1.0f);
 
 		if (MuzzleEffect) {
 			FVector Location = Arrow->GetComponentLocation();

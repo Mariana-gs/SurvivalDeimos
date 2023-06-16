@@ -35,14 +35,19 @@ void ABotAIController::OnPossess(APawn* InPawn){
 }
 
 void ABotAIController::OnSeePawn(APawn* SensedPawn){
-	if (BlackBoardComp && SensedPawn) {
-		GEngine->AddOnScreenDebugMessage(-1,3.f, FColor::Red, TEXT("Estou te Vendo"));
-		BlackBoardComp->SetValueAsObject("Inimigo", SensedPawn);
-		BlackBoardComp->SetValueAsBool("DeveAndar", false);
 
-		BlackBoardComp->SetValueAsBool("DeveAndar", false);
-		ABotCharacter* Bot = Cast <ABotCharacter>(GetPawn());
-		Bot->ArmaInimigo->Atirar();
+	ABotCharacter* Bot = Cast <ABotCharacter>(GetPawn());
 
+	if (!(Bot->bIsDead)) {
+
+		if (BlackBoardComp && SensedPawn) {
+			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, TEXT("Estou te Vendo"));
+			BlackBoardComp->SetValueAsObject("Inimigo", SensedPawn);
+			BlackBoardComp->SetValueAsBool("DeveAndar", false);
+
+			BlackBoardComp->SetValueAsBool("DeveAndar", false);
+
+			Bot->ArmaInimigo->Atirar();
+		}
 	}
 }

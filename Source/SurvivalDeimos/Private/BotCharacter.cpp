@@ -5,6 +5,7 @@
 #include "Engine/World.h"
 #include "Arma.h"
 #include "Engine/EngineTypes.h"
+//#include "GameFramework/CharacterMovement.h"
 
 
 // Sets default values
@@ -27,8 +28,6 @@ void ABotCharacter::BeginPlay(){
 	ArmaInimigo->AttachToComponent(Cast<USceneComponent>(GetMesh()), 
 		FAttachmentTransformRules::SnapToTargetIncludingScale, FName("WeaponSocket"));
 
-
-	
 }
 
 // Called every frame
@@ -43,5 +42,18 @@ void ABotCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void ABotCharacter::SetHealth(float Dano){
+	if (Health > 0.f) {
+		Health -= Dano;
+	}
+	else {
+		bIsDead = true;
+	}
+}
+
+float ABotCharacter::GetHealth(){
+	return Health;
 }
 

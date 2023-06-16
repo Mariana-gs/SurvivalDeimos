@@ -39,11 +39,20 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Jump")
 		bool bIsJumping;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Health")
+		float Health;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Health")
+		bool bIsDead;
+
 	void Jump();
 
 	void StopJump();
 
 	void Atirar();
+
+
+
 
 public:	
 	// Called every frame
@@ -51,6 +60,13 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UFUNCTION()
+		void SetHealth(float Dano);
+
+	UFUNCTION()
+		float GetHealth();
+
 
 	class AArma* ArmaPlayer;
 

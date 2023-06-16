@@ -14,7 +14,8 @@
 #include "Kismet/GamePlayStatics.h"
 #include "Engine/World.h"
 #include "Animation/SkeletalMeshActor.h"
-
+#include "Materials/MaterialInterface.h"
+#include "Math/UnrealMathUtility.h"
 
 // Sets default values
 AArma::AArma()
@@ -26,6 +27,7 @@ AArma::AArma()
 	BloodImpact = nullptr;
 	Impact = nullptr;
 	MeshArma = CreateDefaultSubobject<USkeletalMeshComponent>(FName("MeshArma"));
+	DecalImpacto = nullptr;
 	
 
 	ConstructorHelpers::FObjectFinder<USkeletalMesh>Mesh(TEXT("SkeletalMesh'/Game/Weapons/Rifle.Rifle'"));
@@ -68,6 +70,11 @@ void AArma::Atirar(){
 			
 			}else if (Impact) {
 				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), Impact, Info.Location, Info.ImpactNormal.Rotation(), true);
+
+				FVector Tamanho = FVector(FMath::RandRange(10.f, 30.f));
+				UGameplayStatics::SpawnDecalAttached(DecalImpacto, Tamanho, Info.GetComponent(), 
+					NAME_None, Info.Location, Info.ImpactNormal.Rotation(), EAttachLocation::KeepWorldPosition, 60.f );
+			
 			}
 
 		}

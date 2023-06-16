@@ -37,6 +37,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Effect")
 		class UParticleSystem* Impact;
 
+	UPROPERTY(EditAnywhere, Category = "Effect")
+		class UMaterialInterface* DecalImpacto;
+
 
 public:	
 	// Called every frame

@@ -40,6 +40,10 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Effect")
 		class UMaterialInterface* DecalImpacto;
 
+	UPROPERTY(EditAnywhere, Category = "SoundEffect")
+		class USoundBase* Sound;
+
+
 
 public:	
 	// Called every frame

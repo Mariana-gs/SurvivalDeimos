@@ -16,6 +16,7 @@
 #include "Animation/SkeletalMeshActor.h"
 #include "Materials/MaterialInterface.h"
 #include "Math/UnrealMathUtility.h"
+#include "Sound/SoundBase.h"
 
 // Sets default values
 AArma::AArma()
@@ -28,6 +29,7 @@ AArma::AArma()
 	Impact = nullptr;
 	MeshArma = CreateDefaultSubobject<USkeletalMeshComponent>(FName("MeshArma"));
 	DecalImpacto = nullptr;
+	Sound = nullptr;
 	
 
 	ConstructorHelpers::FObjectFinder<USkeletalMesh>Mesh(TEXT("SkeletalMesh'/Game/Weapons/Rifle.Rifle'"));
@@ -74,9 +76,11 @@ void AArma::Atirar(){
 				FVector Tamanho = FVector(FMath::RandRange(10.f, 30.f));
 				UGameplayStatics::SpawnDecalAttached(DecalImpacto, Tamanho, Info.GetComponent(), 
 					NAME_None, Info.Location, Info.ImpactNormal.Rotation(), EAttachLocation::KeepWorldPosition, 60.f );
-			
 			}
+		}
 
+		if (Sound) {
+			UGameplayStatics::PlaySoundAtLocation(Arrow, Sound, Inicio);
 		}
 
 		//DrawDebugLine(GetWorld(), Inicio, Fim, FColor::Red, false, 5.f, (uint8)0, 1.0f);

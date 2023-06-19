@@ -20,6 +20,8 @@ void AGameModeSurvivalDeimos::BeginPlay(){
 			WidgetAtual->AddToViewport();
 		}
 
+
+
 	}
 
 }

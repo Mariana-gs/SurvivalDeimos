@@ -76,16 +76,15 @@ void AArma::Atirar(){
 				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), BloodImpact, Info.Location, 
 					Info.ImpactNormal.Rotation(), true);
 
-
 				APersonagemTPS* Player = Cast<APersonagemTPS>(Actor);
 				
 				if (Player) {
-					Player->SetHealth(0.25f);
+					Player->SetHealth(10.f);
 				}
 				else {
 					ABotCharacter* Inimigo = Cast<ABotCharacter>(Actor);
 					if (Inimigo) {
-						Inimigo->SetHealth(5.f);
+						Inimigo->SetHealth(10.f);
 					}
 				}
 

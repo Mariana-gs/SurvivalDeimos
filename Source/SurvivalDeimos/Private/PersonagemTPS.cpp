@@ -106,11 +106,13 @@ void APersonagemTPS::SetHealth(float Dano){
 		Health -= Dano;
 	}else{
 		bIsDead = true;
+		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+		check(PlayerController);
+		PlayerController->GetPawn()->DisableInput(PlayerController);
 	}
 }
 
-float APersonagemTPS::GetHealth()
-{
+float APersonagemTPS::GetHealth(){
 	return Health;
 }
 

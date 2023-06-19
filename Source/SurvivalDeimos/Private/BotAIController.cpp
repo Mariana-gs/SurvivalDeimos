@@ -10,8 +10,7 @@
 #include "BotCharacter.h"
 #include "Engine/Engine.h"
 #include "Arma.h"
-
-
+#include "PersonagemTPS.h"
 
 ABotAIController::ABotAIController(){
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(FName("PawnSensingComp"));
@@ -34,20 +33,23 @@ void ABotAIController::OnPossess(APawn* InPawn){
 	}
 }
 
-void ABotAIController::OnSeePawn(APawn* SensedPawn){
+void ABotAIController::OnSeePawn(APawn* SensedPawn) {
 
 	ABotCharacter* Bot = Cast <ABotCharacter>(GetPawn());
+	APersonagemTPS* Player = Cast<APersonagemTPS>(SensedPawn);
 
-	if (!(Bot->bIsDead)) {
+	if (Bot->bIsDead || Player->bIsDead) {
+		BlackBoardComp->SetValueAsObject("Inimigo", nullptr);
+		return;
+	}
 
+	if (!(Bot->bIsDead) && !(Player->bIsDead)) {
 		if (BlackBoardComp && SensedPawn) {
 			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, TEXT("Estou te Vendo"));
 			BlackBoardComp->SetValueAsObject("Inimigo", SensedPawn);
 			BlackBoardComp->SetValueAsBool("DeveAndar", false);
-
-			BlackBoardComp->SetValueAsBool("DeveAndar", false);
-
 			Bot->ArmaInimigo->Atirar();
 		}
 	}
+
 }

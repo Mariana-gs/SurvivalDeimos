@@ -42,9 +42,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Health")
 		float Health;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Health")
-		bool bIsDead;
-
 	void Jump();
 
 	void StopJump();
@@ -67,6 +64,8 @@ public:
 	UFUNCTION()
 		float GetHealth();
 
+	UPROPERTY(BlueprintReadOnly, Category = "Health")
+		bool bIsDead;
 
 	class AArma* ArmaPlayer;
 

@@ -5,8 +5,7 @@
 #include "Engine/World.h"
 #include "Arma.h"
 #include "Engine/EngineTypes.h"
-//#include "GameFramework/CharacterMovement.h"
-
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 ABotCharacter::ABotCharacter()
@@ -50,6 +49,8 @@ void ABotCharacter::SetHealth(float Dano){
 	}
 	else {
 		bIsDead = true;
+		SetLifeSpan(10.f);
+		ArmaInimigo->Destroy();
 	}
 }
 

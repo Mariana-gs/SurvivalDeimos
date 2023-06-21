@@ -19,9 +19,5 @@ void AGameModeSurvivalDeimos::BeginPlay(){
 		if (WidgetAtual) {
 			WidgetAtual->AddToViewport();
 		}
-
-
-
 	}
-
 }

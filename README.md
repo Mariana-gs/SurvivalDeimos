@@ -1,6 +1,5 @@
 # SurvivalDeimos
 
-Jogo em desenvolvimento
 
 ![photo1687369108](https://github.com/Mariana-gs/SurvivalDeimos/assets/81964220/84270b4e-d465-44eb-af31-92a48f9a7ad7)
 
